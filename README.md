@@ -4,7 +4,7 @@ Chat App with Socket.IO
 # Python Server
 Createad a Socket.IO server using Flask
 
-# Dependencies
+## Dependencies
 Python 3.11 installed
 
 Using VS Code:

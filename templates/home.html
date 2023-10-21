@@ -1,0 +1,57 @@
+{% extends 'base.html' %} {% block content %}
+<form method="post" class="buttons">
+  <h3>Enter The Chat Room</h3>
+  <div>
+    <label>User name:</label>
+    <input
+      type="text"
+      placeholder="Pick a name!"
+      name="name"
+      value="{{name}}"
+    />
+  </div>
+  <div class="room-list">
+    {% if rooms %}
+      <h4>Available Rooms:</h4>
+      <ul>
+          {% for room, room_data in rooms.items() %}
+              <li>
+                  <button type="button" class="list-btn" onclick="joinRoom('{{ room }}')">{{ room }}</button>
+              </li>
+          {% endfor %}
+      </ul> 
+    {% endif %}
+  </div>
+  <div class="join">
+    {% if rooms %}
+      <input type="text" placeholder="Room Code" name="code" value="{{code}}"/>
+      <button type="submit" name="join">Join a Room</button>
+    {% endif %}
+  </div>
+  <div>
+    <label>Room name:</label>
+    <input
+      type="text"
+      placeholder="Pick a room name!"
+      name="room_name"
+      value="{{room_name}}"
+    />
+  </div>
+  <button type="submit" name="create" class="create-btn">Create a Room</button>
+  {% if error %}
+  <ul>
+    <li>{{error}}</li>
+  </ul>
+  {% endif %}
+  <script>
+    var buttonContainer = document.getElementById("")  
+  </script>
+  <script>
+    function joinRoom(roomCode) {
+        var codeInput = document.querySelector('input[name="code"]');
+        codeInput.value = roomCode;
+        document.forms[0].submit(); // Submit the form to join the room
+    }
+</script>
+</form>
+{% endblock %}

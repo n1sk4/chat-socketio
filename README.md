@@ -13,7 +13,6 @@ Using VS Code:
  pip install flask-socketio
 ```
 
-
 ## Screenshots
 ### User 1 creates a Chat room
 <img src=https://github.com/n1sk4/chat-socketio/assets/92214769/93651be9-5465-47f8-8ea1-e35a450a6115 alt="drawing" width="500"/> \
@@ -27,3 +26,21 @@ Using VS Code:
 
 ### Chat and Exit
 <img src=https://github.com/n1sk4/chat-socketio/assets/92214769/85645f99-21ae-4b7a-b830-f19dd6d8a41a alt="drawing" width="500"/>
+
+
+# C++ Client
+Createad a Socket.IO client using c++
+
+The client only registers to the Server, then sends a single message and unregisters.
+
+
+## Dependencies
+Socket.IO library installed: [Installation instructions](https://github.com/socketio/socket.io-client-cpp/blob/master/README.md)
+
+## Build using CMake
+```
+ mkdir build
+ cd build
+ cmake ..
+ cmake --build . --target Client --config Release
+```

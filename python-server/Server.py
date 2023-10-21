@@ -77,6 +77,7 @@ def message(data):
 
 @socketio.on("connect")
 def connect(auth):
+    print(f"None joined room None")
     room = session.get("room")
     name = session.get("name")
     if not room or not name:
@@ -103,6 +104,10 @@ def disconnect():
     
     send({"name": name, "message": "has left the room"}, to=room)
     print(f"{name} has left the room {room}")
+
+@socketio.on("hello")
+def return_hello():
+    print("Received Hello")
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)

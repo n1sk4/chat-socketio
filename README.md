@@ -4,6 +4,16 @@ Chat App with Socket.IO
 # Python Server
 Createad a Socket.IO server using Flask
 
+# Dependencies
+Python 3.11 installed
+
+Using VS Code:
+```
+ pip install Flask
+ pip install flask-socketio
+```
+
+
 ## Screenshots
 ### User 1 creates a Chat room
 <img src=https://github.com/n1sk4/chat-socketio/assets/92214769/93651be9-5465-47f8-8ea1-e35a450a6115 alt="drawing" width="500"/> \

@@ -12,6 +12,12 @@ Using VS Code:
  pip install Flask
  pip install flask-socketio
 ```
+## Start Virtual Environment
+
+```
+  py -3 -m venv .venv
+  .venv\Scripts\activate
+```
 
 ## Screenshots
 ### User 1 creates a Chat room

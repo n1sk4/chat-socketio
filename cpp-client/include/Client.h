@@ -10,25 +10,6 @@
 
 using namespace std;
 
-class Client
-{
-public:
-  Client(string hostIp, string hostPort);
-
-private:
-  bool connect();
-  bool disconnect();
-  bool sendUserName();
-  bool sendRoomName();
-  bool sendMessage();
-
-  void setupEvents();
-
-  sio::client m_Client;
-  string m_IpAddress;
-  string m_Port;
-};
-
 class ConnectionListener
 {
 public:
@@ -44,4 +25,26 @@ public:
 private:
   sio::client& m_Handler;
   bool m_IsConnected = false;
+};
+
+class Client
+{
+public:
+  Client(string hostIp, string hostPort);
+
+  bool connect();
+  bool disconnect();
+  bool send(string id, sio::message::list message);
+  bool joinRoom(string roomId, string userName);
+  bool sendMessage(string roomId, string message);
+
+private:
+  void setupEvents();
+
+  sio::client m_Client;
+  string m_IpAddress;
+  string m_Port;
+  string m_UserName;
+
+  ConnectionListener m_Listener;
 };

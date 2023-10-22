@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from flask_socketio import join_room, leave_room, send, SocketIO
 import random
 from string import ascii_uppercase
+import json
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "hjhjsdahhds"
@@ -63,21 +64,38 @@ def room():
 
 @socketio.on("message")
 def message(data):
-    room = session.get("room")
+    client = False
+    if 'client' in data:
+        client = True
+
+    if not client:
+        room = session.get("room")
+    else:
+        room = data["room"]
+
+
     if room not in rooms:
         return 
+        
+    if not client:
+        content = {
+            "name": session.get("name"),
+            "message": data["data"]
+        }
+    else:
+        content = {
+            "name" : data["name"],
+            "message" : data["data"]
+        }
     
-    content = {
-        "name": session.get("name"),
-        "message": data["data"]
-    }
     send(content, to=room)
     rooms[room]["messages"].append(content)
+
     print(f"{session.get('name')} said: {data['data']}")
 
 @socketio.on("connect")
-def connect(auth):
-    print(f"None joined room None")
+def connect():
+    print(f"Someone joined")
     room = session.get("room")
     name = session.get("name")
     if not room or not name:
@@ -106,8 +124,29 @@ def disconnect():
     print(f"{name} has left the room {room}")
 
 @socketio.on("hello")
-def return_hello():
-    print("Received Hello")
+def return_hello(data):
+    print(f"Message: {data}")
+
+@socketio.on("join_room")
+def join_room_cpp_client(data):
+    print(f"Data: {data}")
+    if not data:
+        print("No data aquired")
+    
+    room = data.get("room")
+    name = data.get("name")
+
+    if not room or not name:
+        return
+    if room not in rooms:
+        leave_room(room)
+        return
+    
+    join_room(room)
+    send({"name": name, "message": "has entered the room"}, to=room)
+    rooms[room]["members"] += 1
+    print(f"{name} joined room {room}")
+
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)

@@ -35,7 +35,7 @@
   };
 
   socketio.on("message", (data) => {
-    createMessage(data.name, data.message);
+    createMessage(data.name, data.message, data.client);
   });
 
   const sendMessage = () => {
@@ -47,6 +47,6 @@
 </script>
 {% for msg in messages %}
 <script type="text/javascript">
-  createMessage("{{msg.name}}", "{{msg.message}}");
+  createMessage("{{msg.name}}", "{{msg.message}}", "{{msg.client}}");
 </script>
 {% endfor %} {% endblock %}

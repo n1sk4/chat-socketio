@@ -66,3 +66,42 @@ Socket.IO library installed: [Installation instructions](https://github.com/sock
 
 <img src=https://github.com/n1sk4/chat-socketio/assets/92214769/83a17086-b132-4ac6-86bb-6527fb523c18 alt="drawing" width="500"/>
 
+
+# Android Client
+Createad a Socket.IO client using Android Native (Java)
+
+The client registers to the Python server. Then we're prompted to state the User name and Room ID.
+If the Room ID is available, we join the room and we can chat.
+
+## Dependencies
+Socket.IO instructions: [Socket.IO Java client](https://socketio.github.io/socket.io-client-java/android.html)\
+Socket.IO Java Client: [Socket.IO Installation](https://socketio.github.io/socket.io-client-java/installation.html)\
+Socket.IO Java Client Remote GIT: [socket.io-client-java](https://github.com/socketio/socket.io-client-java)
+
+Maven:
+Add the following dependency to your pom.xml
+```
+<dependencies>
+  <dependency>
+    <groupId>io.socket</groupId>
+    <artifactId>socket.io-client</artifactId>
+    <version>2.1.0</version>
+  </dependency>
+</dependencies>
+}
+```
+
+Gradle:
+Add the following dependency to your build.gradle
+```
+implementation ('io.socket:socket.io-client:2.1.0') {
+  // excluding org.json which is provided by Android
+  exclude group: 'org.json', module: 'json'
+}
+```
+
+## Build using Android Studio
+
+## Screenshots
+
+

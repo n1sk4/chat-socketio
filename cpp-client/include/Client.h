@@ -40,7 +40,7 @@ public:
 
 private:
   void setupEvents();
-
+  void parseMessage(sio::message::list data);
   sio::client m_Client;
   string m_IpAddress;
   string m_Port;

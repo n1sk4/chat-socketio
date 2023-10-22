@@ -54,6 +54,11 @@ bool Client::connect()
   return true;
 }
 
+bool Client::disconnect()
+{
+  return false;
+}
+
 bool Client::send(string aId, sio::message::list aMessage)
 {
   bool success = false;
@@ -124,8 +129,30 @@ void Client::setupEvents()
     }));
   m_Client.socket()->on("message", sio::socket::event_listener_aux([&](string const& name, sio::message::ptr const& data, bool isAck, sio::message::list& ack_resp)
     {
-      g_Lock.lock();
-      cout << data->get_string() << endl;
-      g_Lock.unlock();
+      parseMessage(data);
     }));
+}
+
+void Client::parseMessage(sio::message::list data)
+{
+  string message;
+  auto map = data[0]->get_map();
+
+  if (map.find("name") == map.end())
+    return;
+
+  string name = map["name"]->get_string();
+  if (name == "" || name == m_UserName)
+    return;
+
+  if (map.find("message") == map.end())
+    return;
+
+  string msg = map["message"]->get_string();
+  //if (msg == "" || msg == "has entered the room");
+    //return;
+
+  message = name + ": " + msg;
+
+  cout << endl << message << endl;
 }

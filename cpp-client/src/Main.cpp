@@ -11,11 +11,10 @@ int main()
   cout << "Select room: ";
   cin >> roomCode;
   c.joinRoom(roomCode, userName);
-  std::this_thread::sleep_for(std::chrono::seconds(2));
+  cout << endl << "You joined room: " << roomCode << endl << endl << "Type message : ";
   while (1)
   {
     string msg;
-    cout << "Type message:";
     cin >> msg;
     c.sendMessage(roomCode, msg);
   }

@@ -68,34 +68,32 @@ def message(data):
     if 'client' in data:
         client = True
 
-    if not client:
-        room = session.get("room")
-    else:
+    if client:
         room = data["room"]
+        name = data["name"]
+    else:
+        room = session.get("room")
+        name = session.get("name")
 
+    message = data["data"]
 
     if room not in rooms:
         return 
         
-    if not client:
-        content = {
-            "name": session.get("name"),
-            "message": data["data"]
-        }
-    else:
-        content = {
-            "name" : data["name"],
-            "message" : data["data"]
-        }
+    content = {
+        "name": name,
+        "message": message
+    }
     
     send(content, to=room)
     rooms[room]["messages"].append(content)
+    if not client:
+        send_to_cpp_client(content)
 
-    print(f"{session.get('name')} said: {data['data']}")
+    print(f"{name} said: {data['data']}")
 
 @socketio.on("connect")
 def connect():
-    print(f"Someone joined")
     room = session.get("room")
     name = session.get("name")
     if not room or not name:
@@ -123,10 +121,6 @@ def disconnect():
     send({"name": name, "message": "has left the room"}, to=room)
     print(f"{name} has left the room {room}")
 
-@socketio.on("hello")
-def return_hello(data):
-    print(f"Message: {data}")
-
 @socketio.on("join_room")
 def join_room_cpp_client(data):
     print(f"Data: {data}")
@@ -147,6 +141,8 @@ def join_room_cpp_client(data):
     rooms[room]["members"] += 1
     print(f"{name} joined room {room}")
 
+def send_to_cpp_client(content):
+    socketio.emit("messsage", content)
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)

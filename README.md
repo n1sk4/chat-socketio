@@ -1,5 +1,9 @@
 # chat-socketio
-Chat App with Socket.IO
+Multiplatform playground using Socket.IO:
+ * Python Flask server
+ * HTML client
+ * C++ CLI client
+ * Android Native client
 
 # Python Server
 Createad a Socket.IO server using Flask
